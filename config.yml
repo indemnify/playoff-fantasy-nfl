@@ -1,0 +1,31 @@
+# NFL Fantasy Football Configuration
+
+# API Settings
+api:
+  espn:
+    base_url: "https://site.api.espn.com/apis/site/v2/sports/football/nfl"
+    rate_limit: 60  # requests per minute
+    timeout: 10     # seconds
+  nfl:
+    base_url: "https://api.nfl.com/v3"
+    rate_limit: 60
+    timeout: 10
+
+# Data Storage
+storage:
+  data_dir: "data"
+  cache_dir: "cache"
+  backup_dir: "backup"
+
+# Update Settings
+updates:
+  frequency: 900  # seconds (15 minutes)
+  retry_attempts: 3
+  retry_delay: 60  # seconds
+
+# Display Settings
+display:
+  refresh_rate: 300  # seconds (5 minutes)
+  show_inactive: false
+  sort_by: "points"  # options: points, name, position, team
+  theme: "dark"      # options: light, dark
