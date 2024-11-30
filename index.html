@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFL Playoff Fantasy Football</title>
+    <style>
+        :root {
+            /* NFL Colors */
+            --nfl-blue: #013369;
+            --nfl-red: #D50A0A;
+            --nfl-white: #FFFFFF;
+            --nfl-gray: #4D4D4D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--nfl-white);
+            color: var(--nfl-gray);
+        }
+
+        header {
+            background-color: var(--nfl-blue);
+            color: var(--nfl-white);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav {
+            background-color: var(--nfl-red);
+            padding: 0.5rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--nfl-white);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--nfl-red);
+            color: var(--nfl-white);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 1rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            border: 1px solid var(--nfl-gray);
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>NFL Playoff Fantasy Football</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#standings">Standings</a></li>
+            <li><a href="#teams">Teams</a></li>
+            <li><a href="#stats">Stats</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section class="hero">
+            <h2>Welcome to Playoff Fantasy Football</h2>
+            <p>Create your ultimate playoff team and compete against friends!</p>
+            <a href="#join" class="cta-button">Join Now</a>
+        </section>
+        <section class="features">
+            <div class="feature-card">
+                <h3>Live Scoring</h3>
+                <p>Real-time updates during playoff games</p>
+            </div>
+            <div class="feature-card">
+                <h3>Player Stats</h3>
+                <p>Comprehensive playoff statistics</p>
+            </div>
+            <div class="feature-card">
+                <h3>League Rankings</h3>
+                <p>Compete for the top spot</p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
