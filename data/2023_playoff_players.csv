@@ -1,0 +1,49 @@
+name,position,team
+Baltimore Ravens,DEF,BAL
+Buffalo Bills,DEF,BUF
+Dallas Cowboys,DEF,DAL
+Detroit Lions,DEF,DET
+Kansas City Chiefs,DEF,KC
+Philadelphia Eagles,DEF,PHI
+San Francisco 49ers,DEF,SF
+Justin Tucker,K,BAL
+Tyler Bass,K,BUF
+Brandon Aubrey,K,DAL
+Riley Patterson,K,DET
+Harrison Butker,K,KC
+Jake Elliott,K,PHI
+Jake Moody,K,SF
+Lamar Jackson,QB,BAL
+Josh Allen,QB,BUF
+Dak Prescott,QB,DAL
+Jared Goff,QB,DET
+Patrick Mahomes,QB,KC
+Jalen Hurts,QB,PHI
+Brock Purdy,QB,SF
+Justice Hill,RB,BAL
+James Cook,RB,BUF
+Tony Pollard,RB,DAL
+David Montgomery,RB,DET
+Jahmyr Gibbs,RB,DET
+Isiah Pacheco,RB,KC
+D'Andre Swift,RB,PHI
+Christian McCaffrey,RB,SF
+Mark Andrews,TE,BAL
+Dalton Kincaid,TE,BUF
+Jake Ferguson,TE,DAL
+Sam LaPorta,TE,DET
+Travis Kelce,TE,KC
+Dallas Goedert,TE,PHI
+George Kittle,TE,SF
+Odell Beckham Jr.,WR,BAL
+Zay Flowers,WR,BAL
+Stefon Diggs,WR,BUF
+Gabe Davis,WR,BUF
+CeeDee Lamb,WR,DAL
+Amon-Ra St. Brown,WR,DET
+Jameson Williams,WR,DET
+Rashee Rice,WR,KC
+AJ Brown,WR,PHI
+DeVonta Smith,WR,PHI
+Deebo Samuel,WR,SF
+Brandon Aiyuk,WR,SF
