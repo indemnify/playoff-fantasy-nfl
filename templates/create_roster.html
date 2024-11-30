@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold mb-6">Create Your Playoff Roster</h2>
+    
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-6">
+        <p class="text-yellow-700">Rules:</p>
+        <ul class="list-disc ml-6 text-yellow-700">
+            <li>Select only one player per playoff team</li>
+            <li>Must fill all roster spots</li>
+            <li>Roster Requirements:
+                <ul class="list-disc ml-6">
+                    <li>1 QB</li>
+                    <li>2 RB</li>
+                    <li>3 WR</li>
+                    <li>1 TE</li>
+                    <li>1 Super FLEX (QB/RB/WR/TE)</li>
+                    <li>1 FLEX (RB/WR/TE)</li>
+                    <li>1 K</li>
+                    <li>1 DEF</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <form id="rosterForm" class="space-y-6">
+        <!-- QB Section -->
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold mb-4">Quarterback (QB)</h3>
+            <select name="qb" class="roster-select w-full p-2 border rounded" data-position="QB" required>
+                <option value="">Select QB</option>
+                {% for player in players if player.position == 'QB' %}
+                <option value="{{ player.id }}" data-team="{{ player.team }}">{{ player.name }} ({{ player.team }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- RB Section -->
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold mb-4">Running Backs (RB)</h3>
+            {% for i in range(2) %}
+            <div class="mb-4">
+                <select name="rb{{ i+1 }}" class="roster-select w-full p-2 border rounded" data-position="RB" required>
+                    <option value="">Select RB {{ i+1 }}</option>
+                    {% for player in players if player.position == 'RB' %}
+                    <option value="{{ player.id }}" data-team="{{ player.team }}">{{ player.name }} ({{ player.team }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- WR Section -->
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold mb-4">Wide Receivers (WR)</h3>
+            {% for i in range(3) %}
+            <div class="mb-4">
+                <select name="wr{{ i+1 }}" class="roster-select w-full p-2 border rounded" data-position="WR" required>
+                    <option value="">Select WR {{ i+1 }}</option>
+                    {% for player in players if player.position == 'WR' %}
+                    <option value="{{ player.id }}" data-team="{{ player.team }}">{{ player.name }} ({{ player.team }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- TE Section -->
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold mb-4">Tight End (TE)</h3>
+            <select name="te" class="roster-select w-full p-2 border rounded" data-position="TE" required>
+                <option value="">Select TE</option>
+                {% for player in players if player.position == 'TE' %}
+                <option value="{{ player.id }}" data-team="{{ player.team }}">{{ player.name }} ({{ player.team }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Super FLEX Section -->
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold mb-4">Super FLEX (QB/RB/WR/TE)</h3>
+            <select name="superflex" class="roster-select w-full p-2 border rounded" required>
+                <option value="">Select Super FLEX</option>
+                {% for player in players if player.position in ['QB', 'RB', 'WR', 'TE'] %}
+                <option value="{{ player.id }}" data-team="{{ player.team }}">{{ player.name }} ({{ player.team }}) - {{ player.position }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- FLEX Section -->
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold mb-4">FLEX (RB/WR/TE)</h3>
+            <select name="flex" class="roster-select w-full p-2 border rounded" required>
+                <option value="">Select FLEX</option>
+                {% for player in players if player.position in ['RB', 'WR', 'TE'] %}
+                <option value="{{ player.id }}" data-team="{{ player.team }}">{{ player.name }} ({{ player.team }}) - {{ player.position }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- K Section -->
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold mb-4">Kicker (K)</h3>
+            <select name="k" class="roster-select w-full p-2 border rounded" data-position="K" required>
+                <option value="">Select K</option>
+                {% for player in players if player.position == 'K' %}
+                <option value="{{ player.id }}" data-team="{{ player.team }}">{{ player.name }} ({{ player.team }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- DEF Section -->
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold mb-4">Defense (DEF)</h3>
+            <select name="def" class="roster-select w-full p-2 border rounded" data-position="DEF" required>
+                <option value="">Select DEF</option>
+                {% for player in players if player.position == 'DEF' %}
+                <option value="{{ player.id }}" data-team="{{ player.team }}">{{ player.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mt-8">
+            <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 w-full">Create Roster</button>
+        </div>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('rosterForm');
+    const selects = document.querySelectorAll('.roster-select');
+    
+    // Track selected teams
+    let selectedTeams = new Set();
+    
+    // Function to check if team is already selected
+    function isTeamSelected(team, currentSelect) {
+        for (let select of selects) {
+            if (select !== currentSelect && select.selectedOptions[0]) {
+                const option = select.selectedOptions[0];
+                if (option.dataset.team === team) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    // Handle select changes
+    selects.forEach(select => {
+        select.addEventListener('change', function() {
+            const selectedOption = this.selectedOptions[0];
+            if (selectedOption.value) {
+                const team = selectedOption.dataset.team;
+                if (isTeamSelected(team, this)) {
+                    alert('You can only select one player per team!');
+                    this.value = '';
+                }
+            }
+        });
+    });
+    
+    // Form submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validate all positions are filled
+        let isValid = true;
+        selects.forEach(select => {
+            if (!select.value) {
+                isValid = false;
+            }
+        });
+        
+        if (!isValid) {
+            alert('Please fill all roster positions!');
+            return;
+        }
+        
+        // Collect form data
+        const formData = new FormData(form);
+        const rosterData = {};
+        for (let [key, value] of formData.entries()) {
+            rosterData[key] = value;
+        }
+        
+        // Submit roster
+        fetch('/api/submit-roster', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(rosterData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Roster created successfully!');
+                window.location.href = '/roster-preview';
+            } else {
+                alert('Error creating roster: ' + data.error);
+            }
+        })
+        .catch(error => {
+            alert('Error submitting roster: ' + error);
+        });
+    });
+});
+</script>
+{% endblock %}
