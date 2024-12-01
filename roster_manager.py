@@ -12,11 +12,13 @@ class Player:
     name: str
     position: str
     team: str
+    projected_points: float = 0.0
 
 @dataclass
 class Roster:
     id: str
     user_id: str
+    team_id: str
     qb: Player
     rb1: Player
     rb2: Player
@@ -70,16 +72,31 @@ class RosterManager:
         self.data_dir.mkdir(exist_ok=True)
         self.rosters_dir.mkdir(exist_ok=True)
 
-    def _get_player_info(self, player_id: str) -> Dict:
-        """Get player information from players database"""
-        if not self.players_file.exists():
-            raise FileNotFoundError("Players database not found")
-
-        with open(self.players_file, 'r') as f:
-            players = json.load(f)
-            if player_id not in players:
-                raise ValueError(f"Player {player_id} not found")
-            return players[player_id]
+    def _player_to_dict(self, player: Player) -> Dict:
+        """Convert Player object to dictionary with enhanced stats"""
+        if not player:
+            return None
+            
+        return {
+            'id': player.id,
+            'name': player.name,
+            'position': player.position,
+            'team': player.team,
+            'projected_points': player.projected_points,
+            'stats': {
+                'games_played': 17,
+                'rushing_yards': 0,
+                'rushing_tds': 0,
+                'receiving_yards': 0,
+                'receiving_tds': 0,
+                'passing_yards': 0,
+                'passing_tds': 0,
+                'interceptions': 0,
+                'fumbles': 0,
+                'avg_points': player.projected_points,
+                'last_5_games': [0, 0, 0, 0, 0]
+            }
+        }
 
     def create_roster(self, user_id: str, roster_data: Dict) -> Roster:
         """Create a new roster for a user"""
@@ -92,7 +109,8 @@ class RosterManager:
                     id=player_id,
                     name=player_info['name'],
                     position=player_info['position'],
-                    team=player_info['team']
+                    team=player_info['team'],
+                    projected_points=player_info.get('projected_points', 0.0)
                 )
 
             # Validate positions
@@ -130,6 +148,7 @@ class RosterManager:
             roster = Roster(
                 id=str(uuid.uuid4()),
                 user_id=user_id,
+                team_id=user_id,  # You might want to make this configurable
                 qb=players['qb'],
                 rb1=players['rb1'],
                 rb2=players['rb2'],
@@ -157,6 +176,7 @@ class RosterManager:
         roster_data = {
             'id': roster.id,
             'user_id': roster.user_id,
+            'team_id': roster.team_id,
             'created_at': roster.created_at.isoformat(),
             'players': {
                 'qb': self._player_to_dict(roster.qb),
@@ -176,15 +196,6 @@ class RosterManager:
         with open(roster_file, 'w') as f:
             json.dump(roster_data, f, indent=2)
 
-    def _player_to_dict(self, player: Player) -> Dict:
-        """Convert Player object to dictionary"""
-        return {
-            'id': player.id,
-            'name': player.name,
-            'position': player.position,
-            'team': player.team
-        }
-
     def get_roster(self, roster_id: str) -> Optional[Roster]:
         """Retrieve a roster by ID"""
         roster_file = self.rosters_dir / f"{roster_id}.json"
@@ -201,6 +212,7 @@ class RosterManager:
         return Roster(
             id=data['id'],
             user_id=data['user_id'],
+            team_id=data.get('team_id', data['user_id']),
             created_at=datetime.fromisoformat(data['created_at']),
             qb=self._dict_to_player(players['qb']),
             rb1=self._dict_to_player(players['rb1']),
@@ -217,11 +229,15 @@ class RosterManager:
 
     def _dict_to_player(self, data: Dict) -> Player:
         """Convert dictionary to Player object"""
+        if not data:
+            return None
+            
         return Player(
             id=data['id'],
             name=data['name'],
             position=data['position'],
-            team=data['team']
+            team=data['team'],
+            projected_points=data.get('projected_points', 0.0)
         )
 
     def get_user_rosters(self, user_id: str) -> List[Roster]:
